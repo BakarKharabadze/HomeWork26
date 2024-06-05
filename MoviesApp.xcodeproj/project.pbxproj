@@ -8,17 +8,32 @@
 
 /* Begin PBXBuildFile section */
 		FB79DC562C109522008B8458 /* MoviesAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB79DC552C109522008B8458 /* MoviesAppApp.swift */; };
-		FB79DC582C109522008B8458 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB79DC572C109522008B8458 /* ContentView.swift */; };
+		FB79DC582C109522008B8458 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB79DC572C109522008B8458 /* MainTabView.swift */; };
 		FB79DC5A2C109524008B8458 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB79DC592C109524008B8458 /* Assets.xcassets */; };
 		FB79DC5D2C109524008B8458 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB79DC5C2C109524008B8458 /* Preview Assets.xcassets */; };
+		FB79DC642C109573008B8458 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB79DC632C109573008B8458 /* Movie.swift */; };
+		FB79DC672C10961F008B8458 /* Networking in Frameworks */ = {isa = PBXBuildFile; productRef = FB79DC662C10961F008B8458 /* Networking */; };
+		FB79DC692C109784008B8458 /* MovieCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB79DC682C109784008B8458 /* MovieCollectionView.swift */; };
+		FB79DC6B2C10979F008B8458 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB79DC6A2C10979F008B8458 /* SearchView.swift */; };
+		FB79DC722C109B74008B8458 /* MovieCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB79DC712C109B74008B8458 /* MovieCollectionViewModel.swift */; };
+		FB79DC742C10C194008B8458 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB79DC732C10C194008B8458 /* SearchViewModel.swift */; };
+		FB79DC782C10FE76008B8458 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB79DC772C10FE76008B8458 /* MovieCell.swift */; };
+		FB79DC7A2C10FECB008B8458 /* MovieCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB79DC792C10FECB008B8458 /* MovieCellViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		FB79DC522C109522008B8458 /* MoviesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoviesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB79DC552C109522008B8458 /* MoviesAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesAppApp.swift; sourceTree = "<group>"; };
-		FB79DC572C109522008B8458 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		FB79DC572C109522008B8458 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		FB79DC592C109524008B8458 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB79DC5C2C109524008B8458 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		FB79DC632C109573008B8458 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		FB79DC682C109784008B8458 /* MovieCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionView.swift; sourceTree = "<group>"; };
+		FB79DC6A2C10979F008B8458 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		FB79DC712C109B74008B8458 /* MovieCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewModel.swift; sourceTree = "<group>"; };
+		FB79DC732C10C194008B8458 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		FB79DC772C10FE76008B8458 /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
+		FB79DC792C10FECB008B8458 /* MovieCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCellViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB79DC672C10961F008B8458 /* Networking in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,7 +68,9 @@
 			isa = PBXGroup;
 			children = (
 				FB79DC552C109522008B8458 /* MoviesAppApp.swift */,
-				FB79DC572C109522008B8458 /* ContentView.swift */,
+				FB79DC702C109936008B8458 /* Models */,
+				FB79DC6C2C109903008B8458 /* Scenes */,
+				FB79DC7B2C1101E6008B8458 /* Components */,
 				FB79DC592C109524008B8458 /* Assets.xcassets */,
 				FB79DC5B2C109524008B8458 /* Preview Content */,
 			);
@@ -65,6 +83,59 @@
 				FB79DC5C2C109524008B8458 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		FB79DC6C2C109903008B8458 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				FB79DC6D2C10990C008B8458 /* TabView */,
+				FB79DC6E2C10991B008B8458 /* MovieCollection */,
+				FB79DC6F2C10992A008B8458 /* Search */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		FB79DC6D2C10990C008B8458 /* TabView */ = {
+			isa = PBXGroup;
+			children = (
+				FB79DC572C109522008B8458 /* MainTabView.swift */,
+			);
+			path = TabView;
+			sourceTree = "<group>";
+		};
+		FB79DC6E2C10991B008B8458 /* MovieCollection */ = {
+			isa = PBXGroup;
+			children = (
+				FB79DC682C109784008B8458 /* MovieCollectionView.swift */,
+				FB79DC712C109B74008B8458 /* MovieCollectionViewModel.swift */,
+			);
+			path = MovieCollection;
+			sourceTree = "<group>";
+		};
+		FB79DC6F2C10992A008B8458 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				FB79DC6A2C10979F008B8458 /* SearchView.swift */,
+				FB79DC732C10C194008B8458 /* SearchViewModel.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		FB79DC702C109936008B8458 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FB79DC632C109573008B8458 /* Movie.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		FB79DC7B2C1101E6008B8458 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				FB79DC772C10FE76008B8458 /* MovieCell.swift */,
+				FB79DC792C10FECB008B8458 /* MovieCellViewModel.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +154,9 @@
 			dependencies = (
 			);
 			name = MoviesApp;
+			packageProductDependencies = (
+				FB79DC662C10961F008B8458 /* Networking */,
+			);
 			productName = MoviesApp;
 			productReference = FB79DC522C109522008B8458 /* MoviesApp.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +185,9 @@
 				Base,
 			);
 			mainGroup = FB79DC492C109522008B8458;
+			packageReferences = (
+				FB79DC652C10961F008B8458 /* XCRemoteSwiftPackageReference "SimpleNetworking" */,
+			);
 			productRefGroup = FB79DC532C109522008B8458 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -137,8 +214,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB79DC582C109522008B8458 /* ContentView.swift in Sources */,
+				FB79DC6B2C10979F008B8458 /* SearchView.swift in Sources */,
+				FB79DC742C10C194008B8458 /* SearchViewModel.swift in Sources */,
+				FB79DC782C10FE76008B8458 /* MovieCell.swift in Sources */,
+				FB79DC722C109B74008B8458 /* MovieCollectionViewModel.swift in Sources */,
+				FB79DC7A2C10FECB008B8458 /* MovieCellViewModel.swift in Sources */,
+				FB79DC692C109784008B8458 /* MovieCollectionView.swift in Sources */,
+				FB79DC582C109522008B8458 /* MainTabView.swift in Sources */,
 				FB79DC562C109522008B8458 /* MoviesAppApp.swift in Sources */,
+				FB79DC642C109573008B8458 /* Movie.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,6 +426,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FB79DC652C10961F008B8458 /* XCRemoteSwiftPackageReference "SimpleNetworking" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/BakarKharabadze/SimpleNetworking";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FB79DC662C10961F008B8458 /* Networking */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FB79DC652C10961F008B8458 /* XCRemoteSwiftPackageReference "SimpleNetworking" */;
+			productName = Networking;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FB79DC4A2C109522008B8458 /* Project object */;
 }
