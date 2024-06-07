@@ -12,8 +12,9 @@ struct MainTabView: View {
         TabView {
             MovieCollectionView()
                 .tabItem {
-                    Image(systemName: "popcorn.circle")
-                    Text("Movies")
+                    Image("Home")
+                        .renderingMode(.template)
+                    Text("Home")
                 }
             SearchView()
                 .tabItem {
@@ -21,8 +22,7 @@ struct MainTabView: View {
                     Text("Search")
                 }
         }
-        .accentColor(.black)
-        .background(Color.green)
+        .accentColor(.blue)
     }
 }
 

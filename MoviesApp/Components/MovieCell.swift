@@ -18,7 +18,7 @@ struct MovieCell: View {
     }
     
     var body: some View {
-        HStack(alignment: .top) {
+        VStack {
             if let posterURL = viewModel.posterURL(for: movie.posterPath) {
                 AsyncImage(url: posterURL) { image in
                     image
@@ -31,26 +31,12 @@ struct MovieCell: View {
                         .frame(width: 100, height: 150)
                 }
             }
-            VStack(alignment: .leading, spacing: 8) {
-                Text(movie.title)
-                    .font(.headline)
-                    .lineLimit(2)
-                Text(movie.releaseDate)
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
-                Spacer()
-                HStack {
-                    Image(systemName: "star.fill")
-                        .foregroundColor(.yellow)
-                        .padding(-5)
-                    Text(String(format: "%.1f", movie.voteAverage))
-                        .foregroundColor(.yellow)
-                }
-            }
-            .padding(.leading, 8)
+            Text(movie.title)
+                .font(.title3)
+                .lineLimit(2)
+                .foregroundColor(.primary)
         }
         .padding(.vertical, 8)
     }
 }
-
 

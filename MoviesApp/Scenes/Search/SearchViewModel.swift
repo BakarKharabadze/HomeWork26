@@ -12,23 +12,113 @@ final class SearchViewModel: ObservableObject {
     
     @Published var movies: [Movie] = []
     @Published var isLoading = false
+    @Published var genres: [Genre] = []
+    @Published var currentlySelectedSearchFilter: SelectedSearchFilter = .name
     
-    func searchMovies(query: String) {
-        guard !query.isEmpty else { return }
+    init() {
+        fetchGenres()
+    }
+    
+    private let apiKey = "33a6e6cd1c269eeda4c9269cf6f55219"
+    private let baseUrl = "https://api.themoviedb.org"
+    private let discoverPath = "/3/discover/movie"
+    private let searchPath = "/3/search/movie"
+    private let genrePath = "/3/genre/movie/list"
+    
+    func searchMovies(text: String, completion: @escaping ([Movie]) -> Void) {
+        guard !text.isEmpty else { return }
         
         isLoading = true
-        let urlString = "https://api.themoviedb.org/3/search/movie?api_key=33a6e6cd1c269eeda4c9269cf6f55219&query=\(query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
+        var requestUrl = ""
         
-        NetworkManager.shared.request(url: urlString) { [weak self] (result: Result<MoviesResponse, NetworkError>) in
+        switch currentlySelectedSearchFilter {
+        case .name:
+            requestUrl = baseUrl + searchPath +
+            "?api_key=\(apiKey)&query=\(text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
+            
+        case .year:
+            requestUrl = baseUrl + discoverPath + "?api_key=\(apiKey)&primary_release_year=\(text)"
+            
+        case .genre:
+            if let genre = genres.first(where: { $0.name.lowercased() == text.lowercased() }) {
+                requestUrl = baseUrl + discoverPath + "?api_key=\(apiKey)&with_genres=\(genre.id)"
+            } else {
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    completion([])
+                }
+                return
+            }
+        }
+        
+        NetworkManager.shared.request(url: requestUrl) { [weak self] (result: Result<MoviesResponse, NetworkError>) in
             DispatchQueue.main.async {
                 self?.isLoading = false
                 switch result {
                 case .success(let response):
                     self?.movies = response.results
+                    completion(response.results)
                 case .failure(let error):
-                    print("Failed: \(error)")
+                    print("Failed to load movies: \(error)")
+                    completion([])
+                }
+            }
+        }
+    }
+    
+    func fetchGenres() {
+        let url = baseUrl + genrePath + "?api_key=\(apiKey)&language=en"
+        NetworkManager.shared.request(url: url) { [weak self] (result: Result<GenresResponse, NetworkError>) in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let response):
+                    self?.genres = response.genres
+                case .failure(let error):
+                    print("Failed to fetch genres: \(error)")
+                }
+            }
+        }
+    }
+    
+    func posterURL(for path: String?) -> URL? {
+        guard let path = path else { return nil }
+        let baseURL = "https://image.tmdb.org/t/p/w500"
+        return URL(string: baseURL + path)
+    }
+    
+    func performSearch(query: String, completion: @escaping (Bool) -> Void) {
+        switch currentlySelectedSearchFilter {
+        case .name:
+            if query.isEmpty || Int(query) != nil {
+                completion(true)
+            } else {
+                searchMovies(text: query) { movies in
+                    completion(movies.isEmpty)
+                }
+            }
+        case .year:
+            if let year = Int(query), year > 1800, year < 2025 {
+                searchMovies(text: query) { movies in
+                    completion(movies.isEmpty)
+                }
+            } else {
+                completion(true)
+            }
+        case .genre:
+            if query.isEmpty || Int(query) != nil {
+                completion(true)
+            } else {
+                searchMovies(text: query) { movies in
+                    completion(movies.isEmpty)
                 }
             }
         }
     }
 }
+
+enum SelectedSearchFilter {
+    case name
+    case year
+    case genre
+}
+

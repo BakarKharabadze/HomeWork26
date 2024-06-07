@@ -9,21 +9,33 @@ import SwiftUI
 
 struct MovieCollectionView: View {
     @StateObject private var viewModel = MovieCollectionViewModel()
+    private var columns = [GridItem(alignment: .top), GridItem(alignment: .top), GridItem(alignment: .top)]
     
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(viewModel.movies) { movie in
-                   MovieCell(movie: movie)
+            VStack(alignment: .leading) {
+                Text("Movies")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.horizontal)
+                
+                ScrollView {
+                    LazyVGrid(columns: columns) {
+                        ForEach(viewModel.movies) { movie in
+                            NavigationLink(destination: MovieDetailsView(movie: movie)) {
+                                MovieCell(movie: movie)
+                                    .foregroundColor(.black)
+                            }
+                            
+                        }
+                    }
+                    .padding(.horizontal)
                 }
             }
-            .navigationTitle("Movies")
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
-        
 }
-    
-
 
 #Preview {
     MovieCollectionView()
