@@ -4,14 +4,23 @@
 //
 //  Created by Bakar Kharabadze on 6/7/24.
 //
-
 import SwiftUI
 
 struct MovieDetailsView: View {
-    
     @StateObject var viewModel = MovieDetailsViewModel()
-    var movie: Movie
-    @State private var isFavorite = false
+    @State var isFavorite = false
+    
+    var id: Int
+    var title: String
+    var backdropPath: String
+    var voteAverage: Double
+    var posterPath: String
+    var releaseDate: String
+    var genreIDs: [Int]
+    var overview: String
+    
+    @Environment(\.modelContext) private var modelContext
+    
     
     var body: some View {
         NavigationStack {
@@ -22,18 +31,17 @@ struct MovieDetailsView: View {
                     movieDetails
                 }
             }
-            .navigationTitle(movie.title)
+            .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 viewModel.fetchGenres()
-                isFavorite = FavoritesViewModel.shared.isFavorite(movie: movie)
             }
         }
     }
     
     private var backdropImage: some View {
         ZStack {
-            if let backDropUrl = viewModel.backDropURL(for: movie.backdropPath) {
+            if let backDropUrl = viewModel.backDropURL(for: backdropPath) {
                 AsyncImage(url: backDropUrl) { image in
                     image
                         .resizable()
@@ -48,7 +56,7 @@ struct MovieDetailsView: View {
                 HStack {
                     Image(systemName: "star.fill")
                         .foregroundColor(.orange)
-                    Text(String(format: "%.1f", movie.voteAverage))
+                    Text(String(format: "%.1f", voteAverage))
                         .foregroundColor(.orange)
                 }
                 .padding(8)
@@ -64,7 +72,7 @@ struct MovieDetailsView: View {
     private var movieInfo: some View {
         VStack {
             HStack {
-                if let posterURL = viewModel.posterURL(for: movie.posterPath) {
+                if let posterURL = viewModel.posterURL(for: posterPath) {
                     AsyncImage(url: posterURL) { image in
                         image
                             .resizable()
@@ -78,7 +86,7 @@ struct MovieDetailsView: View {
                 }
                 VStack {
                     Spacer()
-                    Text(movie.title)
+                    Text(title)
                         .font(.subheadline)
                         .fontWeight(.bold)
                         .lineLimit(2)
@@ -101,13 +109,13 @@ struct MovieDetailsView: View {
     private var movieMetadata: some View {
         HStack {
             Image("Calendar")
-            Text(movie.releaseDate)
+            Text(releaseDate)
                 .font(.footnote)
                 .foregroundStyle(.secondary)
             Divider()
                 .overlay(Color.primary)
             Image("Ticket")
-            ForEach(viewModel.genres.filter { movie.genreIDs.contains($0.id) }) { genre in
+            ForEach(viewModel.genres.filter {genreIDs.contains($0.id) }) { genre in
                 Text("\(genre.name).")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
@@ -143,19 +151,17 @@ struct MovieDetailsView: View {
                 .padding(.bottom, 20)
                 .frame(maxWidth: .infinity, alignment: .center)
             
-            Text(movie.overview)
+            Text(overview)
                 .padding(.horizontal, 40)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     private func toggleFavorite() {
-        if isFavorite {
-            FavoritesViewModel.shared.removeFavorite(movie: movie)
-        } else {
-            FavoritesViewModel.shared.addFavorite(movie: movie)
-        }
         isFavorite.toggle()
-    }
+            if isFavorite {
+                modelContext.insert(FavoriteMovie(id: id, backdropPath: backdropPath, overview: overview, genreIDs: genreIDs, posterPath: posterPath, releaseDate: releaseDate, title: title, voteAverage: voteAverage))
+            }
+        }
+    
 }
-

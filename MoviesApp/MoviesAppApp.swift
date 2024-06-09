@@ -13,5 +13,6 @@ struct MoviesAppApp: App {
         WindowGroup {
             MainTabView()
         }
+        .modelContainer(for: FavoriteMovie.self)
     }
 }

@@ -4,16 +4,17 @@
 //
 //  Created by Bakar Kharabadze on 6/9/24.
 //
-
 import SwiftUI
+import SwiftData
 
 struct FavoritesView: View {
-    @StateObject var viewModel = FavoritesViewModel()
-    
+    @Environment(\.modelContext) private var modelContext
+    @Query private var favoriteMovies: [FavoriteMovie]
+
     var body: some View {
         NavigationStack {
             VStack {
-                if viewModel.favorites.isEmpty {
+                if favoriteMovies.isEmpty {
                     VStack {
                         Spacer()
                         VStack {
@@ -33,27 +34,18 @@ struct FavoritesView: View {
                 }
             }
             .navigationTitle("Favorites")
-            .onAppear {
-                loadFavorites()
-            }
         }
     }
     
     private var movieListView: some View {
-        List(viewModel.favorites) { movie in
-            NavigationLink(destination: MovieDetailsView(movie: movie)) {
-                MovieDetailsCell(movie: movie)
+        List(favoriteMovies) { favoriteMovie in
+            NavigationLink(destination: MovieDetailsView(id: favoriteMovie.id, title: favoriteMovie.title, backdropPath: favoriteMovie.backdropPath ?? "", voteAverage: favoriteMovie.voteAverage, posterPath: favoriteMovie.posterPath ?? "", releaseDate: favoriteMovie.releaseDate, genreIDs: favoriteMovie.genreIDs, overview: favoriteMovie.overview)) {
+                MovieDetailsCell(title: favoriteMovie.title, voteAverage: favoriteMovie.voteAverage, posterPath: favoriteMovie.posterPath ?? "", releaseDate: favoriteMovie.releaseDate, genreIDs: favoriteMovie.genreIDs)
                     .foregroundColor(.black)
             }
         }
         .listStyle(PlainListStyle())
     }
-    
-    private func loadFavorites() {
-        viewModel.favorites = FavoritesViewModel.shared.getFavorites()
-    }
 }
 
-#Preview {
-    FavoritesView()
-}
+

@@ -22,7 +22,7 @@ struct MovieCollectionView: View {
                 ScrollView {
                     LazyVGrid(columns: columns) {
                         ForEach(viewModel.movies) { movie in
-                            NavigationLink(destination: MovieDetailsView(movie: movie)) {
+                            NavigationLink(destination: MovieDetailsView(id: movie.id, title: movie.title, backdropPath: movie.backdropPath ?? "", voteAverage: movie.voteAverage, posterPath: movie.posterPath ?? "", releaseDate: movie.releaseDate, genreIDs: movie.genreIDs, overview: movie.overview)) {
                                 MovieCell(movie: movie)
                                     .foregroundColor(.black)
                             }

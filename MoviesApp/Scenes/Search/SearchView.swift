@@ -128,8 +128,8 @@ struct SearchView: View {
     
     private var movieListView: some View {
         List(viewModel.movies) { movie in
-            NavigationLink(destination: MovieDetailsView(movie: movie)) {
-                MovieDetailsCell(movie: movie)
+            NavigationLink(destination: MovieDetailsView(id: movie.id, title: movie.title, backdropPath: movie.backdropPath ?? "", voteAverage: movie.voteAverage, posterPath: movie.posterPath ?? "", releaseDate: movie.releaseDate, genreIDs: movie.genreIDs, overview: movie.overview)) {
+                MovieDetailsCell(title: movie.title, voteAverage: movie.voteAverage, posterPath: movie.posterPath ?? "", releaseDate: movie.releaseDate, genreIDs: movie.genreIDs)
                     .foregroundColor(.black)
             }
         }

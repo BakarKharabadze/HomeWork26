@@ -10,15 +10,18 @@ import SwiftUI
 struct MovieDetailsCell: View {
     
     @StateObject var viewModel = CellViewModel()
-    var movie: Movie
     
-    public init(movie: Movie) {
-        self.movie = movie
-    }
+   
+    var title: String
+    var voteAverage: Double
+    var posterPath: String
+    var releaseDate: String
+    var genreIDs: [Int]
+    
     
     var body: some View {
         HStack {
-            if let posterURL = viewModel.posterURL(for: movie.posterPath) {
+            if let posterURL = viewModel.posterURL(for: posterPath) {
                 AsyncImage(url: posterURL) { image in
                     image
                         .resizable()
@@ -31,7 +34,7 @@ struct MovieDetailsCell: View {
                 }
             }
             VStack(alignment: .leading) {
-                Text(movie.title)
+                Text(title)
                     .foregroundColor(.primary)
                     .font(.headline)
                     .lineLimit(2)
@@ -40,7 +43,7 @@ struct MovieDetailsCell: View {
                 HStack {
                     Image(systemName: "star")
                         .foregroundColor(.orange)
-                    Text(String(format: "%.1f", movie.voteAverage))
+                    Text(String(format: "%.1f", voteAverage))
                         .foregroundColor(.orange)
                         .padding(.horizontal, -5)
                 }
@@ -48,7 +51,7 @@ struct MovieDetailsCell: View {
                     Image("Ticket")
                         .renderingMode(.template)
                         .foregroundColor(.primary)
-                    if let firstGenre = viewModel.genres.first(where: { movie.genreIDs.contains($0.id) }) {
+                    if let firstGenre = viewModel.genres.first(where: { genreIDs.contains($0.id) }) {
                         Text(firstGenre.name)
                             .font(.footnote)
                             .foregroundColor(.primary)
@@ -58,7 +61,7 @@ struct MovieDetailsCell: View {
                     Image("Calendar")
                         .renderingMode(.template)
                         .foregroundColor(.primary)
-                    Text(movie.releaseDate)
+                    Text(releaseDate)
                         .font(.footnote)
                         .foregroundColor(.primary)
                 }
