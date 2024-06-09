@@ -26,7 +26,6 @@ struct MovieCollectionView: View {
                                 MovieCell(movie: movie)
                                     .foregroundColor(.black)
                             }
-                            
                         }
                     }
                     .padding(.horizontal)

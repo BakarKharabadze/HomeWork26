@@ -11,6 +11,7 @@ struct MovieDetailsView: View {
     
     @StateObject var viewModel = MovieDetailsViewModel()
     var movie: Movie
+    @State private var isFavorite = false
     
     var body: some View {
         NavigationStack {
@@ -25,11 +26,11 @@ struct MovieDetailsView: View {
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 viewModel.fetchGenres()
+                isFavorite = FavoritesViewModel.shared.isFavorite(movie: movie)
             }
         }
     }
     
-    //MARK: - Background Image
     private var backdropImage: some View {
         ZStack {
             if let backDropUrl = viewModel.backDropURL(for: movie.backdropPath) {
@@ -60,7 +61,6 @@ struct MovieDetailsView: View {
         }
     }
     
-    //MARK: - Movie info
     private var movieInfo: some View {
         VStack {
             HStack {
@@ -118,11 +118,22 @@ struct MovieDetailsView: View {
     
     private var aboutMovie: some View {
         VStack(alignment: .leading) {
-            Text("About Movie")
-                .font(.headline)
-                .padding(.top, 16)
-                .padding(.horizontal, 40)
-            
+            HStack {
+                Text("About Movie")
+                    .font(.headline)
+                    .padding(.top, 16)
+                    .padding(.horizontal, 40)
+                Spacer()
+                HStack {
+                    Button(action: {
+                        toggleFavorite()
+                    }) {
+                        Image(systemName: isFavorite ? "heart.fill" : "heart")
+                            .foregroundColor(isFavorite ? .red : .black)
+                    }
+                }.padding(.leading, -60)
+                    .padding(.bottom, -20)
+            }
             Divider()
                 .frame(width: 335, height: 4)
                 .background(.gray)
@@ -137,8 +148,14 @@ struct MovieDetailsView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
+    
+    private func toggleFavorite() {
+        if isFavorite {
+            FavoritesViewModel.shared.removeFavorite(movie: movie)
+        } else {
+            FavoritesViewModel.shared.addFavorite(movie: movie)
+        }
+        isFavorite.toggle()
+    }
 }
-
-
-
 

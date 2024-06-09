@@ -21,6 +21,12 @@ struct MainTabView: View {
                     Image(systemName: "magnifyingglass")
                     Text("Search")
                 }
+            FavoritesView()
+                .tabItem {
+                    Image("Favorites")
+                        .renderingMode(.template)
+                    Text("Favorites")
+                }
         }
         .accentColor(.blue)
     }

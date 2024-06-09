@@ -14,10 +14,7 @@ final class SearchViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var genres: [Genre] = []
     @Published var currentlySelectedSearchFilter: SelectedSearchFilter = .name
-    
-    init() {
-        fetchGenres()
-    }
+
     
     private let apiKey = "33a6e6cd1c269eeda4c9269cf6f55219"
     private let baseUrl = "https://api.themoviedb.org"
@@ -64,26 +61,6 @@ final class SearchViewModel: ObservableObject {
                 }
             }
         }
-    }
-    
-    func fetchGenres() {
-        let url = baseUrl + genrePath + "?api_key=\(apiKey)&language=en"
-        NetworkManager.shared.request(url: url) { [weak self] (result: Result<GenresResponse, NetworkError>) in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let response):
-                    self?.genres = response.genres
-                case .failure(let error):
-                    print("Failed to fetch genres: \(error)")
-                }
-            }
-        }
-    }
-    
-    func posterURL(for path: String?) -> URL? {
-        guard let path = path else { return nil }
-        let baseURL = "https://image.tmdb.org/t/p/w500"
-        return URL(string: baseURL + path)
     }
     
     func performSearch(query: String, completion: @escaping (Bool) -> Void) {
