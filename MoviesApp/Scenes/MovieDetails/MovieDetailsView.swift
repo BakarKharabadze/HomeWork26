@@ -5,9 +5,12 @@
 //  Created by Bakar Kharabadze on 6/7/24.
 //
 import SwiftUI
+import SwiftData
 
 struct MovieDetailsView: View {
     @StateObject var viewModel = MovieDetailsViewModel()
+    @Environment(\.modelContext) private var modelContext
+    @Query(FetchDescriptor<FavoriteMovie>()) private var favoriteMovies: [FavoriteMovie]
     @State var isFavorite = false
     
     var id: Int
@@ -18,9 +21,6 @@ struct MovieDetailsView: View {
     var releaseDate: String
     var genreIDs: [Int]
     var overview: String
-    
-    @Environment(\.modelContext) private var modelContext
-    
     
     var body: some View {
         NavigationStack {
@@ -35,6 +35,7 @@ struct MovieDetailsView: View {
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 viewModel.fetchGenres()
+                checkIfFavorite()
             }
         }
     }
@@ -115,7 +116,7 @@ struct MovieDetailsView: View {
             Divider()
                 .overlay(Color.primary)
             Image("Ticket")
-            ForEach(viewModel.genres.filter {genreIDs.contains($0.id) }) { genre in
+            ForEach(viewModel.genres.filter { genreIDs.contains($0.id) }) { genre in
                 Text("\(genre.name).")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
@@ -157,11 +158,28 @@ struct MovieDetailsView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     
-    private func toggleFavorite() {
-        isFavorite.toggle()
-            if isFavorite {
-                modelContext.insert(FavoriteMovie(id: id, backdropPath: backdropPath, overview: overview, genreIDs: genreIDs, posterPath: posterPath, releaseDate: releaseDate, title: title, voteAverage: voteAverage))
-            }
-        }
+    private func checkIfFavorite() {
+        isFavorite = favoriteMovies.contains { $0.id == id }
+    }
     
+    private func toggleFavorite() {
+        if isFavorite {
+            if let favoriteMovie = favoriteMovies.first(where: { $0.id == id }) {
+                modelContext.delete(favoriteMovie)
+            }
+        } else {
+            let favoriteMovie = FavoriteMovie(
+                id: id,
+                backdropPath: backdropPath,
+                overview: overview,
+                genreIDs: genreIDs,
+                posterPath: posterPath,
+                releaseDate: releaseDate,
+                title: title,
+                voteAverage: voteAverage
+            )
+            modelContext.insert(favoriteMovie)
+        }
+        isFavorite.toggle()
+    }
 }

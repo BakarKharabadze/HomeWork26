@@ -26,7 +26,6 @@
 		FB89F6142C13385000D543B6 /* MovieDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB89F6132C13385000D543B6 /* MovieDetailsViewModel.swift */; };
 		FB89F6162C13A60800D543B6 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB89F6152C13A60800D543B6 /* Launch Screen.storyboard */; };
 		FBD147132C151E8E00A76221 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD147122C151E8E00A76221 /* FavoritesView.swift */; };
-		FBD147152C1521E400A76221 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD147142C1521E400A76221 /* FavoritesViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,7 +48,6 @@
 		FB89F6132C13385000D543B6 /* MovieDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewModel.swift; sourceTree = "<group>"; };
 		FB89F6152C13A60800D543B6 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		FBD147122C151E8E00A76221 /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
-		FBD147142C1521E400A76221 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,7 +91,6 @@
 			isa = PBXGroup;
 			children = (
 				FB79DC552C109522008B8458 /* MoviesAppApp.swift */,
-				FB15AEBF2C15D7B30076BC9B /* FavoriteMovie.swift */,
 				FB79DC702C109936008B8458 /* Models */,
 				FB79DC6C2C109903008B8458 /* Scenes */,
 				FB79DC7B2C1101E6008B8458 /* Components */,
@@ -153,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				FB79DC632C109573008B8458 /* Movie.swift */,
+				FB15AEBF2C15D7B30076BC9B /* FavoriteMovie.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -189,7 +187,6 @@
 			isa = PBXGroup;
 			children = (
 				FBD147122C151E8E00A76221 /* FavoritesView.swift */,
-				FBD147142C1521E400A76221 /* FavoritesViewModel.swift */,
 			);
 			path = Favorites;
 			sourceTree = "<group>";
@@ -286,7 +283,6 @@
 				FB79DC582C109522008B8458 /* MainTabView.swift in Sources */,
 				FB79DC562C109522008B8458 /* MoviesAppApp.swift in Sources */,
 				FB79DC642C109573008B8458 /* Movie.swift in Sources */,
-				FBD147152C1521E400A76221 /* FavoritesViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

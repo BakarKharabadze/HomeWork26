@@ -8,8 +8,7 @@ import SwiftUI
 import SwiftData
 
 struct FavoritesView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var favoriteMovies: [FavoriteMovie]
+    @Query(FetchDescriptor<FavoriteMovie>()) private var favoriteMovies: [FavoriteMovie]
 
     var body: some View {
         NavigationStack {
@@ -22,7 +21,7 @@ struct FavoritesView: View {
                                 .font(.title)
                                 .fontWeight(.semibold)
                             
-                            Text("All moves marked as favourite will be added here")
+                            Text("All movies marked as favourite will be added here")
                                 .font(.subheadline)
                                 .foregroundColor(.gray)
                         }
@@ -39,9 +38,23 @@ struct FavoritesView: View {
     
     private var movieListView: some View {
         List(favoriteMovies) { favoriteMovie in
-            NavigationLink(destination: MovieDetailsView(id: favoriteMovie.id, title: favoriteMovie.title, backdropPath: favoriteMovie.backdropPath ?? "", voteAverage: favoriteMovie.voteAverage, posterPath: favoriteMovie.posterPath ?? "", releaseDate: favoriteMovie.releaseDate, genreIDs: favoriteMovie.genreIDs, overview: favoriteMovie.overview)) {
-                MovieDetailsCell(title: favoriteMovie.title, voteAverage: favoriteMovie.voteAverage, posterPath: favoriteMovie.posterPath ?? "", releaseDate: favoriteMovie.releaseDate, genreIDs: favoriteMovie.genreIDs)
-                    .foregroundColor(.black)
+            NavigationLink(destination: MovieDetailsView(
+                id: favoriteMovie.id,
+                title: favoriteMovie.title,
+                backdropPath: favoriteMovie.backdropPath ?? "",
+                voteAverage: favoriteMovie.voteAverage,
+                posterPath: favoriteMovie.posterPath ?? "",
+                releaseDate: favoriteMovie.releaseDate,
+                genreIDs: favoriteMovie.genreIDs,
+                overview: favoriteMovie.overview
+            )) {
+                MovieDetailsCell(
+                    title: favoriteMovie.title,
+                    voteAverage: favoriteMovie.voteAverage,
+                    posterPath: favoriteMovie.posterPath ?? "",
+                    releaseDate: favoriteMovie.releaseDate,
+                    genreIDs: favoriteMovie.genreIDs
+                ).foregroundColor(.black)
             }
         }
         .listStyle(PlainListStyle())
