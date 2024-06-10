@@ -5,19 +5,21 @@
 //  Created by Bakar Kharabadze on 6/7/24.
 //
 
-import Foundation
 import Networking
+import Foundation
+import SwiftData
 
 final class MovieDetailsViewModel: ObservableObject {
     
     @Published var movies: [Movie] = []
     @Published var genres: [Genre] = []
+    @Published var isFavorite = false
 
-      private let apiKey = "33a6e6cd1c269eeda4c9269cf6f55219"
-      
-      init() {
-          fetchGenres()
-      }
+    private let apiKey = "33a6e6cd1c269eeda4c9269cf6f55219"
+    
+    init() {
+        fetchGenres()
+    }
     
     func posterURL(for path: String?) -> URL? {
         guard let path = path else { return nil }
@@ -59,5 +61,18 @@ final class MovieDetailsViewModel: ObservableObject {
         }
     }
     
+    func checkIfFavorite(favoriteMovies: [FavoriteMovie], movieID: Int) {
+        isFavorite = favoriteMovies.contains { $0.id == movieID }
+    }
     
+    func toggleFavorite(favoriteMovies: [FavoriteMovie], modelContext: ModelContext, movie: FavoriteMovie) {
+        if isFavorite {
+            if let favoriteMovie = favoriteMovies.first(where: { $0.id == movie.id }) {
+                modelContext.delete(favoriteMovie)
+            }
+        } else {
+            modelContext.insert(movie)
+        }
+        isFavorite.toggle()
+    }
 }

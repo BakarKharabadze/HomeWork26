@@ -14,7 +14,7 @@ class FavoriteMovie {
     var backdropPath: String?
     var overview: String
     var genreIDs: [Int]
-    var posterPath: String?
+    var posterPath: String? 
     var releaseDate: String
     var title: String
     var voteAverage: Double

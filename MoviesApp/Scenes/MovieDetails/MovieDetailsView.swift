@@ -11,7 +11,7 @@ struct MovieDetailsView: View {
     @StateObject var viewModel = MovieDetailsViewModel()
     @Environment(\.modelContext) private var modelContext
     @Query(FetchDescriptor<FavoriteMovie>()) private var favoriteMovies: [FavoriteMovie]
-    @State var isFavorite = false
+    @State var isFavorite = true
     
     var id: Int
     var title: String
@@ -35,7 +35,7 @@ struct MovieDetailsView: View {
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 viewModel.fetchGenres()
-                checkIfFavorite()
+                viewModel.checkIfFavorite(favoriteMovies: favoriteMovies, movieID: id)
             }
         }
     }
@@ -135,10 +135,20 @@ struct MovieDetailsView: View {
                 Spacer()
                 HStack {
                     Button(action: {
-                        toggleFavorite()
+                        let movie = FavoriteMovie(
+                                                   id: id,
+                                                   backdropPath: backdropPath,
+                                                   overview: overview,
+                                                   genreIDs: genreIDs,
+                                                   posterPath: posterPath,
+                                                   releaseDate: releaseDate,
+                                                   title: title,
+                                                   voteAverage: voteAverage
+                                               )
+                        viewModel.toggleFavorite(favoriteMovies: favoriteMovies, modelContext: modelContext, movie: movie)
                     }) {
-                        Image(systemName: isFavorite ? "heart.fill" : "heart")
-                            .foregroundColor(isFavorite ? .red : .black)
+                        Image(systemName: viewModel.isFavorite ? "heart.fill" : "heart")
+                            .foregroundColor(viewModel.isFavorite ? .red : .black)
                     }
                 }.padding(.leading, -60)
                     .padding(.bottom, -20)
@@ -156,30 +166,5 @@ struct MovieDetailsView: View {
                 .padding(.horizontal, 40)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-    }
-    
-    private func checkIfFavorite() {
-        isFavorite = favoriteMovies.contains { $0.id == id }
-    }
-    
-    private func toggleFavorite() {
-        if isFavorite {
-            if let favoriteMovie = favoriteMovies.first(where: { $0.id == id }) {
-                modelContext.delete(favoriteMovie)
-            }
-        } else {
-            let favoriteMovie = FavoriteMovie(
-                id: id,
-                backdropPath: backdropPath,
-                overview: overview,
-                genreIDs: genreIDs,
-                posterPath: posterPath,
-                releaseDate: releaseDate,
-                title: title,
-                voteAverage: voteAverage
-            )
-            modelContext.insert(favoriteMovie)
-        }
-        isFavorite.toggle()
     }
 }
